@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Dashboard</title>
+
+    <!-- BOX ICONS -->
+    <link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet">
+
+    <!-- CUSTOM CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+
+    <!-- CUSTOM JS -->
+    <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</head>
+<body>
+    <!-- MENÚ LATERAL -->
+    <div class="menu-dashboard">
+        <div class="top-menu">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='img/logo.svg') }}" alt="">
+                <span>MI DASHBOARD</span>
+            </div>
+            <div class="toggle">
+                <i class='bx bx-menu'></i>
+            </div>
+        </div>
+
+        <div class="input-search">
+            <i class='bx bx-search'></i>
+            <input type="text" class="input" placeholder="Buscar">
+        </div>
+
+        <div class="menu">
+            
+            
+
+            <div class="enlace" id="btn-usuario">
+                <i class="bx bx-user"></i><span>Usuario</span>
+            </div>
+
+            <div class="enlace" id="btn-archivos">
+                <i class="bx bx-file-blank"></i><span>Archivos</span>
+            </div>
+
+            <div class="enlace" id="btn-documentacion">
+                <i class="bx bx-book"></i><span>Documentación</span>
+            </div>
+
+            
+
+            
+        </div>
+    </div>
+
+
+
+
+    <!-- CONTENIDO CENTRAL -->
+    <div class="contenido">
+        <!-- PERFIL DEL USUARIO -->
+        <div id="perfil" class="perfil" style="display: none;">
+            <div class="perfil-contenido">
+                <img src="{{ url_for('static', filename=usuario['foto']) }}" alt="Foto de usuario" class="foto-perfil">
+                <h2>{{ usuario['nombre'] }} {{ usuario['apellidos'] }}</h2>
+                <p><b>Carrera:</b> {{ usuario['carrera'] }}</p>
+                <p><b>Universidad:</b> {{ usuario['universidad'] }}</p>
+                <p><b>Año de ingreso:</b> {{ usuario['año_ingreso'] }}</p>
+            </div>
+        </div>
+
+<!-- ARCHIVOS PYTHON -->
+        <div id="archivos" class="archivos" style="display:none; margin-top: -500px; width: 60%; margin-left:auto; margin-right:auto;">
+           
+
+          <div class="archivos-contenido" style="width: 80%; margin: auto;">
+             <h2>📂 Subir y ejecutar programas Python</h2>
+              <form action="/upload" method="post" enctype="multipart/form-data" class="form-upload">
+                    <input type="file" name="archivo" accept=".py" required>
+                    <button type="submit">Subir</button>
+              </form>
+
+
+             <h3>Programas disponibles:</h3>
+             {% if archivos %}
+             <ul>
+                  {% for archivo in archivos %}
+                        <li>
+                           {{ archivo }}
+                            <button class="btn-ejecutar" data-archivo="{{ archivo }}">Ejecutar</button>
+                        </li>
+                 {% endfor %}
+             </ul>
+                {% else %}
+                  <p>No hay archivos aún.</p>
+                {% endif %}
+
+               <!-- Área de salida tipo terminal -->
+                <div id="terminal" class="terminal">
+                 <h3>💻 Resultado:</h3>
+                 <pre id="salida"></pre>
+                </div>
+         </div>
+        </div>
+        <div id="documentacion" class="seccion" style="display: none; flex-direction: column; align-items: center; justify-content: center;">
+            <h2> - </h2>
+            <iframe src="{{ url_for('static', filename='docs/documentacion.pdf') }}" 
+                    width="80%" height="800px" 
+                    style="border:none; display:block; position:absolute; top:0; right:0; bottom:0; width:80%; height:100vh; ">
+            </iframe>
+        </div>
+
+
+
+    </div>
+</body>
+</html>
