@@ -3,7 +3,7 @@ import os, subprocess
 
 app = Flask(__name__)
 
-RUTA_CODIGOS = os.path.join('estadistica_computacional', 'dashboard', 'codigos')
+RUTA_CODIGOS = os.path.join('codigos')
 
 @app.route('/')
 def inicio():
